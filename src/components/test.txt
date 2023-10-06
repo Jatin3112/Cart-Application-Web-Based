@@ -1,0 +1,59 @@
+ {cart.some((p) => p.id === prod.id) ? (
+            <div>
+              <Button
+                variant="danger"
+                onClick={() =>
+                  dispatch({
+                    type: "REMOVE_FROM_CART",
+                    payload: prod,
+                  })
+                }
+              >
+                Remove from Cart
+              </Button>
+              <Button
+                variant="outline-primary"
+                style={{marginLeft:10}}
+                onClick={() =>
+                  dispatch({
+                    type: "CHANGE_CART_QTY",
+                    payload: {
+                      id: prod.id,
+                      qty: prod.qty - 1,
+                    },
+                  })
+                }
+                disabled={prod.qty <= 1}
+              >
+                -
+              </Button>
+              <span className="mx-2">{prod.qty}</span>
+              <Button
+                variant="outline-primary"
+                onClick={() =>
+                  dispatch({
+                    type: "CHANGE_CART_QTY",
+                    payload: {
+                      id: prod.id,
+                      qty: prod.qty + 1,
+                    },
+                  })
+                }
+                disabled={prod.qty >= prod.inStock}
+              >
+                +
+              </Button>
+            </div>
+          ) : (
+            <Button
+              onClick={() =>
+                dispatch({
+                  type: "ADD_TO_CART",
+                  payload: prod,
+                })
+              }
+              disabled={!prod.inStock}
+            >
+              {!prod.inStock ? "Out of Stock" : "Add to Cart"}
+            </Button>
+          )}
